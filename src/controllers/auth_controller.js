@@ -26,13 +26,13 @@ exports.register = async (req, res) => {
 
     res.status(201).json({
       message: "Success",
-       status: 1,
+      status: 1,
       data: {
         id: user._id,
         name: user.name,
         email: user.email,
       },
-     
+
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,17 +72,17 @@ exports.login = async (req, res) => {
     res.json({
       message: "Success",
       status: 1,
-      data:{
-         user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      data: {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        },
         accessToken,
-      refreshToken
+        refreshToken
       }
-     
-    
+
+
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -110,9 +110,9 @@ exports.refreshToken = async (req, res) => {
         { userId: user._id },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
-      );    
+      );
 
-      res.json({ status: 1,message:"Success", data: { accessToken} });
+      res.json({ status: 1, message: "Success", data: { accessToken } });
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

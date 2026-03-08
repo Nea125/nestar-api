@@ -1,11 +1,14 @@
+
 const express = require("express");
 const mongoose = require("mongoose");
+const path = require("path");
 require("dotenv").config();
 
 const authRoutes = require("./src/routes/auth");
-
 const requestLogger = require("./src/middlewares/request_logger");
-const authMiddleware = require("./src/middlewares/auth_middleware"); // import middleware
+const authMiddleware = require("./src/middlewares/auth_middleware");
+const bannerRoutes = require("./src/routes/banner");
+const userRoutes = require("./src/routes/user");
 
 const app = express();
 
@@ -13,8 +16,15 @@ const app = express();
 app.use(express.json());
 app.use(requestLogger);
 
+// Serve uploaded images
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Routes
+// Middleware run befor route
 app.use("/api/auth", authRoutes);
+app.use("/api/banner",authMiddleware, bannerRoutes);
+app.use("/api/user",authMiddleware,userRoutes); 
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
@@ -25,4 +35,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-
