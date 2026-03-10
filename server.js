@@ -9,6 +9,9 @@ const requestLogger = require("./src/middlewares/request_logger");
 const authMiddleware = require("./src/middlewares/auth_middleware");
 const bannerRoutes = require("./src/routes/banner");
 const userRoutes = require("./src/routes/user");
+const categoryRoutes = require("./src/routes/category");
+const productRoutes = require("./src/routes/product");
+
 
 const app = express();
 
@@ -24,6 +27,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", authRoutes);
 app.use("/api/banner",authMiddleware, bannerRoutes);
 app.use("/api/user",authMiddleware,userRoutes); 
+app.use("/api/category",authMiddleware,categoryRoutes); 
+app.use("/api/product",authMiddleware,productRoutes); 
+
 
 
 // MongoDB connection
