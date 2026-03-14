@@ -9,6 +9,12 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: Date,
   otp: String,
   otpExpires: Date,
+  provider: { 
+    type: String, 
+    enum: ["email", "google", "facebook", "apple"], 
+    default: "email" 
+  },
+  providerId: { type: String }, // e.g., Google sub, Facebook id, Apple sub
 
 }, { timestamps: true });
 
