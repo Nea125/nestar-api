@@ -8,6 +8,13 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
 
+    slug: {
+      type: String,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+
     description: {
       type: String,
       default: "",
@@ -15,7 +22,7 @@ const productSchema = new mongoose.Schema(
 
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category", // reference to Category collection
+      ref: "Category",
       required: true,
     },
 
@@ -24,19 +31,25 @@ const productSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    // inventory
+    stock: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+
+    // unit type (banana, water, rice...)
+    unit: {
+      type: String,
+      enum: ["PCS", "KG", "G", "L", "ML", "BOX", "PACK", "BOTTLE"],
+      default: "PCS",
+    },
 
     images: [
       {
-        url: { type: String, required: true }, // image URL
-        alt: { type: String, default: "" },   // optional alt text
+        url: { type: String, required: true },
       },
     ],
-
-    weight: {
-      type: Number,   // in grams, optional
-      default: null,
-    },
-
     rating: {
       type: Number,
       default: 0,
@@ -47,22 +60,32 @@ const productSchema = new mongoose.Schema(
     favorites: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // users who favorited this product
+        ref: "User",
       },
     ],
 
     product_detail: {
-      type: mongoose.Schema.Types.Mixed, // flexible object for extra details (size, color, etc.)
+      type: mongoose.Schema.Types.Mixed,
       default: {},
     },
-    is_deleted:{
-      type:Boolean,
-      default:false
-    }
+
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
+
+    is_deleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
-    timestamps: true, // createdAt, updatedAt
+    timestamps: true,
   }
 );
+
+// index for faster search
+productSchema.index({ name: "text", description: "text" });
 
 module.exports = mongoose.model("Product", productSchema);
