@@ -11,6 +11,7 @@ const bannerRoutes = require("./src/routes/banner");
 const userRoutes = require("./src/routes/user");
 const categoryRoutes = require("./src/routes/category");
 const productRoutes = require("./src/routes/product");
+const cartRoutes = require("./src/routes/cart");
 
 
 const app = express();
@@ -29,7 +30,7 @@ app.use("/api/banner",authMiddleware, bannerRoutes);
 app.use("/api/user",authMiddleware,userRoutes); 
 app.use("/api/category",authMiddleware,categoryRoutes); 
 app.use("/api/product",authMiddleware,productRoutes); 
-
+app.use("/api/cart",authMiddleware,cartRoutes); 
 
 
 // MongoDB connection
