@@ -12,6 +12,7 @@ const userRoutes = require("./src/routes/user");
 const categoryRoutes = require("./src/routes/category");
 const productRoutes = require("./src/routes/product");
 const cartRoutes = require("./src/routes/cart");
+const favouriteRoutes = require("./src/routes/favourite");
 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use("/api/user",authMiddleware,userRoutes);
 app.use("/api/category",authMiddleware,categoryRoutes); 
 app.use("/api/product",authMiddleware,productRoutes); 
 app.use("/api/cart",authMiddleware,cartRoutes); 
+app.use("/api/favourite",authMiddleware,favouriteRoutes); 
 
 
 // MongoDB connection
